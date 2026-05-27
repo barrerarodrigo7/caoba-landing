@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>Clase de Cortesía — Caoba Fitness Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #000000;
+      --white:   #ffffff;
+      --green:   #4F6351;
+      --green-dark: #3d4f3f;
+      --grey:    #9D9EA3;
+      --grey-light: rgba(255,255,255,0.6);
+      --surface: #0d0d0d;
+      --surface2: #141414;
+      --line:    rgba(255,255,255,0.08);
+      --line2:   rgba(255,255,255,0.14);
+      --font-display: "Barlow Condensed", sans-serif;
+      --font-body:    "Barlow", sans-serif;
+      --hyrox: #FFD200;
+      --red: #c0392b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 60px;
+      background: rgba(0,0,0,0.95);
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-inner {
+      max-width: 900px; width: 100%;
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-back {
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-back svg { width: 16px; height: 16px; }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 18px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--white);
+    }
+    .nav-brand span {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; color: var(--grey);
+      display: block; margin-top: 1px;
+    }
+
+    /* ── PAGE LAYOUT ── */
+    .page {
+      min-height: 100vh;
+      padding-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── LEFT PANEL ── */
+    .panel-left {
+      background: var(--green);
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+    }
+    .panel-left-label {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 16px;
+    }
+    .panel-left-title {
+      font-family: var(--font-display);
+      font-weight: 900; font-style: italic;
+      font-size: clamp(44px, 5vw, 68px);
+      line-height: 0.9;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+      margin-bottom: 32px;
+    }
+    .panel-left-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      max-width: 320px;
+      margin-bottom: 40px;
+    }
+    .panel-left-desc strong { color: var(--white); }
+    .panel-perks { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .panel-perks li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 14px; color: rgba(255,255,255,0.85);
+    }
+    .panel-perks li::before {
+      content: "";
+      display: block;
+      width: 6px; height: 6px;
+      background: var(--white);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ── RIGHT PANEL (FORM) ── */
+    .panel-right {
+      background: var(--surface);
+      padding: 56px 48px;
+      overflow-y: auto;
+    }
+
+    .form-header {
+      margin-bottom: 40px;
+    }
+    .form-header-label {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    .form-header-title {
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 28px;
+      letter-spacing: 0.02em; text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    /* ── FORM FIELDS ── */
+    .form { display: flex; flex-direction: column; gap: 0; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 16px;
+    }
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 7px;
+    }
+    .field-label .req { color: var(--green); margin-left: 2px; }
+
+    .field input,
+    .field select {
+      background: var(--surface2);
+      border: 1px solid var(--line2);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.2s;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field input:focus,
+    .field select:focus { border-color: var(--green); }
+    .field input::placeholder { color: rgba(255,255,255,0.2); }
+    .field input.error,
+    .field select.error { border-color: var(--red); }
+
+    /* Select custom arrow */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: "";
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--grey);
+      pointer-events: none;
+    }
+    .select-wrap select { padding-right: 36px; cursor: pointer; }
+    .select-wrap select option { background: #1a1a1a; }
+
+    /* Date input */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.5);
+      cursor: pointer;
+    }
+
+    /* Phone row */
+    .phone-wrap { display: flex; gap: 8px; }
+    .phone-indicativo {
+      width: 110px; flex-shrink: 0;
+    }
+    .phone-numero { flex: 1; }
+
+    /* Clase toggle */
+    .clase-toggle {
+      display: flex;
+      gap: 0;
+      margin-bottom: 20px;
+    }
+    .clase-btn {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid var(--line2);
+      background: var(--surface2);
+      color: var(--grey);
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 15px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .clase-btn:first-child { border-right: none; }
+    .clase-btn.active-cf {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+    .clase-btn.active-hy {
+      background: var(--hyrox);
+      color: var(--black);
+      border-color: var(--hyrox);
+    }
+
+    /* Slots grid */
+    .slots-wrap { margin-bottom: 20px; }
+    .slots-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .slot-btn {
+      padding: 10px 6px;
+      border: 1px solid var(--line2);
+      background: var(--surface2);
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .slot-btn:hover { border-color: var(--grey); color: var(--white); }
+    .slot-btn.selected-cf {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--white);
+    }
+    .slot-btn.selected-hy {
+      background: var(--hyrox);
+      border-color: var(--hyrox);
+      color: var(--black);
+    }
+    .slots-empty {
+      color: var(--grey);
+      font-size: 13px;
+      padding: 12px 0;
+    }
+
+    /* Genero radio */
+    .radio-group {
+      display: flex; gap: 8px;
+      margin-bottom: 20px;
+    }
+    .radio-opt {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      padding: 11px 10px;
+      border: 1px solid var(--line2);
+      background: var(--surface2);
+      color: rgba(255,255,255,0.6);
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .radio-opt input { display: none; }
+    .radio-opt.checked {
+      border-color: var(--green);
+      background: rgba(79,99,81,0.25);
+      color: var(--white);
+    }
+
+    /* Divider */
+    .form-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0 24px;
+    }
+    .form-section-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    /* Submit */
+    .btn-submit {
+      width: 100%;
+      padding: 18px;
+      background: var(--green);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 16px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .form-note {
+      font-size: 12px; color: var(--grey);
+      margin-top: 14px; text-align: center; line-height: 1.5;
+    }
+
+    /* Error / success states */
+    .field-error {
+      font-size: 11px; color: var(--red);
+      margin-top: 4px; display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* Success screen */
+    .success-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 64px 32px;
+      min-height: 400px;
+    }
+    .success-screen.show { display: flex; }
+    .success-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .success-icon svg { width: 32px; height: 32px; color: white; }
+    .success-title {
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 32px;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .success-sub {
+      color: var(--grey-light);
+      font-size: 15px; line-height: 1.7;
+      max-width: 360px; margin-bottom: 32px;
+    }
+    .success-wa {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: white;
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 14px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 14px 28px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .success-wa:hover { background: #1ebe5a; }
+
+    /* Spinner */
+    .spinner {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-submit.loading .spinner { display: inline-block; }
+    .btn-submit.loading .btn-text { display: none; }
+
+    /* ── RESPONSIVE ── */
+    /* ── MODAL TÉRMINOS ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.88); align-items: center; justify-content: center;
+      padding: 20px; backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #0d0d0d;
+      border: 1px solid rgba(255,255,255,0.12);
+      max-width: 640px; width: 100%;
+      max-height: 80vh;
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+      flex-shrink: 0;
+    }
+    .modal-header-title {
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 16px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--white);
+    }
+    .modal-header-sub {
+      font-size: 11px; color: var(--grey);
+      margin-top: 3px; letter-spacing: 0.04em;
+    }
+    .modal-close {
+      background: none; border: none; color: var(--grey);
+      font-size: 22px; cursor: pointer; line-height: 1;
+      padding: 0 4px; flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--white); }
+    .modal-body {
+      overflow-y: auto; padding: 24px;
+      flex: 1;
+    }
+    .modal-body h3 {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--green); margin: 20px 0 8px;
+    }
+    .modal-body h3:first-child { margin-top: 0; }
+    .modal-body p {
+      font-size: 13px; color: rgba(255,255,255,0.72);
+      line-height: 1.7; margin-bottom: 10px;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+    .modal-accept-btn {
+      width: 100%; padding: 13px;
+      background: var(--green); color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 13px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-accept-btn:hover { background: var(--green-dark); }
+
+    /* ── CHECKBOX TÉRMINOS ── */
+    .terms-wrap {
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #111;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .terms-wrap.error { border-color: var(--red); }
+    .terms-check {
+      width: 18px; height: 18px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: transparent;
+      cursor: pointer; flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .terms-check.checked {
+      border-color: var(--green);
+      background: var(--green);
+    }
+    .terms-check svg { display: none; }
+    .terms-check.checked svg { display: block; }
+    .terms-text {
+      font-size: 13px; color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+    .terms-text a {
+      color: var(--green); text-decoration: underline;
+      cursor: pointer;
+    }
+    .terms-text a:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      .page { grid-template-columns: 1fr; }
+      .panel-left {
+        position: static; height: auto;
+        padding: 40px 24px;
+      }
+      .panel-left-title { font-size: 48px; }
+      .panel-right { padding: 36px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .slots-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .nav-inner { padding: 0 16px; }
+      .panel-right { padding: 28px 16px; }
+      .radio-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver
+    </a>
+    <div class="nav-brand">
+      CAOBA
+      <span>Fitness Center</span>
+    </div>
+    <div style="width:60px"></div>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+    <p class="panel-left-label">Caoba Fitness Center</p>
+    <h1 class="panel-left-title">Tu primera<br/>clase es<br/>gratis.</h1>
+    <p class="panel-left-desc">
+      Desde el 2015 entrenamos con <strong>estructura y propósito</strong>.
+      Regístrate, elige tu clase y te contactamos para confirmar tu espacio.
+    </p>
+    <ul class="panel-perks">
+      <li>CrossFit o Hyrox — tú decides</li>
+      <li>Coaches certificados en cada sesión</li>
+      <li>Sin compromiso, sin excusas</li>
+      <li>Te contactamos en menos de 24 horas</li>
+    </ul>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel-right">
+    <div class="form-header">
+      <p class="form-header-label">Registro</p>
+      <h2 class="form-header-title">Clase de cortesía</h2>
+    </div>
+
+    <!-- FORM -->
+    <form class="form" id="registroForm" novalidate>
+
+      <p class="form-section-label">Datos personales</p>
+
+      <div class="form-row">
+        <div class="field">
+          <label class="field-label" for="nombre">Nombre <span class="req">*</span></label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" autocomplete="given-name" />
+          <span class="field-error" id="err-nombre">Campo requerido</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="apellido">Apellido <span class="req">*</span></label>
+          <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" autocomplete="family-name" />
+          <span class="field-error" id="err-apellido">Campo requerido</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label class="field-label" for="tipo_doc">Tipo de documento <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select id="tipo_doc" name="tipo_doc">
+              <option value="">Selecciona</option>
+              <option value="CC">Cédula de ciudadanía</option>
+              <option value="CE">Cédula de extranjería</option>
+              <option value="PA">Pasaporte</option>
+              <option value="NIT">NIT</option>
+            </select>
+          </div>
+          <span class="field-error" id="err-tipo_doc">Campo requerido</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="num_doc">Número de documento <span class="req">*</span></label>
+          <input type="text" id="num_doc" name="num_doc" placeholder="Sin puntos ni espacios" inputmode="numeric" />
+          <span class="field-error" id="err-num_doc">Campo requerido</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label class="field-label">Género <span class="req">*</span></label>
+          <div class="radio-group" id="genero-group">
+            <label class="radio-opt">
+              <input type="radio" name="genero" value="M" />M
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="genero" value="F" />F
+            </label>
+            <label class="radio-opt" style="flex:1.4">
+              <input type="radio" name="genero" value="Prefiero no decir" />No decir
+            </label>
+          </div>
+          <span class="field-error" id="err-genero">Selecciona una opción</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="fecha_nac">Fecha de nacimiento <span class="req">*</span></label>
+          <input type="date" id="fecha_nac" name="fecha_nac" max="" />
+          <span class="field-error" id="err-fecha_nac">Campo requerido</span>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+      <p class="form-section-label">Contacto</p>
+
+      <div class="field">
+        <label class="field-label" for="email">Correo electrónico <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" autocomplete="email" />
+        <span class="field-error" id="err-email">Ingresa un correo válido</span>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Celular <span class="req">*</span></label>
+        <div class="phone-wrap">
+          <div class="select-wrap phone-indicativo">
+            <select id="indicativo" name="indicativo">
+              <option value="+57">🇨🇴 +57</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+52">🇲🇽 +52</option>
+              <option value="+54">🇦🇷 +54</option>
+              <option value="+56">🇨🇱 +56</option>
+              <option value="+51">🇵🇪 +51</option>
+              <option value="+58">🇻🇪 +58</option>
+              <option value="+593">🇪🇨 +593</option>
+              <option value="+44">🇬🇧 +44</option>
+            </select>
+          </div>
+          <div class="phone-numero">
+            <input type="tel" id="celular" name="celular" placeholder="3001234567" inputmode="numeric" />
+          </div>
+        </div>
+        <span class="field-error" id="err-celular">Ingresa un número válido (sin espacios)</span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="como_llegaste">¿Cómo llegaste a Caoba? <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="como_llegaste" name="como_llegaste">
+            <option value="">Selecciona</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Página web">Página web</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Caminando">Pasé caminando</option>
+            <option value="Referido">Me recomendaron</option>
+          </select>
+        </div>
+        <span class="field-error" id="err-como_llegaste">Campo requerido</span>
+      </div>
+
+      <div class="form-divider"></div>
+      <p class="form-section-label">Tu clase</p>
+
+      <div class="field" style="margin-bottom:12px;">
+        <label class="field-label">Clase de interés <span class="req">*</span></label>
+      </div>
+      <div class="clase-toggle" id="clase-toggle">
+        <button type="button" class="clase-btn" data-clase="CrossFit">CrossFit</button>
+        <button type="button" class="clase-btn" data-clase="Hyrox">Hyrox</button>
+      </div>
+      <span class="field-error" id="err-clase" style="margin-top:-12px;margin-bottom:16px;">Selecciona una clase</span>
+
+      <div class="slots-wrap">
+        <p class="slots-label">Fecha y hora de preferencia <span class="req" style="color:var(--green)">*</span></p>
+
+        <!-- PASO 1: día -->
+        <div class="field" id="field-dia" style="margin-bottom:12px; display:none;">
+          <label class="field-label" for="dia-select">Día <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select id="dia-select">
+              <option value="">Selecciona un día</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- PASO 2: horas filtradas -->
+        <div class="slots-empty" id="slots-empty">Selecciona primero la clase de interés.</div>
+        <div class="slots-grid" id="slots-grid" style="display:none"></div>
+        <span class="field-error" id="err-slot">Selecciona un día y horario</span>
+      </div>
+
+      <!-- TÉRMINOS Y CONDICIONES -->
+      <div class="terms-wrap" id="terms-wrap">
+        <div class="terms-check" id="terms-check" role="checkbox" aria-checked="false" tabindex="0">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+            <polyline points="1 4.5 4.5 8 10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="terms-text">
+          He leído y acepto el
+          <a id="open-terms">consentimiento informado y términos y condiciones</a>
+          de Caoba Fitness SAS.
+        </span>
+      </div>
+      <span class="field-error" id="err-terms">Debes aceptar los términos y condiciones para continuar</span>
+
+      <button type="submit" class="btn-submit" id="btnSubmit">
+        <span class="btn-text">Reservar mi clase gratuita</span>
+        <span class="spinner"></span>
+      </button>
+
+      <p class="form-note">
+        Al registrarte aceptas que Caoba Fitness Center te contacte para confirmar tu clase.<br/>
+        Cra 14b #106-83, Bogotá · <a href="https://wa.me/573052985336" style="color:var(--green)">WhatsApp</a>
+      </p>
+
+    </form>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 class="success-title">¡Listo!</h2>
+      <p class="success-sub">Tu registro fue exitoso. Te contactaremos en menos de 24 horas para confirmar tu clase de cortesía.</p>
+      <a href="https://wa.me/573052985336?text=Hola%2C%20acabo%20de%20registrarme%20para%20mi%20clase%20de%20cortesia" class="success-wa">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Confirmar por WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- MODAL TÉRMINOS Y CONDICIONES -->
+<div class="modal-overlay" id="termsModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-header-title">Consentimiento informado</div>
+        <div class="modal-header-sub">Caoba Fitness SAS — Términos y condiciones</div>
+      </div>
+      <button class="modal-close" onclick="closeTerms()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <h3>Considerando</h3>
+      <p>CAOBA FITNESS SAS presta OTROS SERVICIOS ESPECIALES DE SALUD en los establecimientos denominados CAOBA FITNESS, CAOBA RING 107, CAOBA RING 92 y CAOBA RING ZONA G.</p>
+      <p>Las actividades físicas que se desarrollan al interior de dichos establecimientos requieren ESFUERZOS FÍSICOS IMPORTANTES que conllevan ALTOS RIESGOS de sufrir daños en la salud de la persona quien ejercita, en este caso EL AFILIADO.</p>
+
+      <h3>Manifestaciones del afiliado</h3>
+      <p>El AFILIADO manifiesta que está en óptimas condiciones físicas y mentales para gozar de los servicios de CAOBA FITNESS.</p>
+      <p>El AFILIADO es el único y directo responsable de adelantar los exámenes y valoraciones médicas que corroboren dicha condición.</p>
+      <p>El AFILIADO manifiesta que conoce y acepta los ALTOS RIESGOS a los que se somete por adelantar actividades físicas y deportivas al interior de los establecimientos de CAOBA FITNESS SAS.</p>
+      <p>El AFILIADO manifiesta que asumirá por su propia cuenta y riesgo todos los daños que sufra en su salud como consecuencia de las actividades físicas que lleve a cabo en dichos establecimientos.</p>
+      <p>EL AFILIADO exonera a CAOBA FITNESS SAS de cualquier responsabilidad que se derive de los daños que sufra en su salud como consecuencia de las actividades físicas realizadas en los establecimientos de CAOBA FITNESS SAS.</p>
+      <p>EL AFILIADO se compromete a comunicar a CAOBA FITNESS SAS cualquier variación en su estado de salud que requiera el uso de corticoides o inmunosupresores.</p>
+
+      <h3>Tratamiento de datos personales</h3>
+      <p>De acuerdo con la Ley 1581 de 2012 y el Decreto 1377 de 2013, el AFILIADO autoriza expresamente a CAOBA FITNESS SAS para el tratamiento de sus datos personales recolectados con ocasión del presente contrato, para fines administrativos, comerciales, de publicidad, servicio al cliente, contacto, y para los siguientes propósitos: comunicación sobre productos, servicios, ofertas, promociones y alianzas; provisión y promoción de servicios; cumplimiento de obligaciones con clientes, proveedores y empleados; y evaluación de la calidad de los servicios.</p>
+
+      <h3>Condiciones particulares</h3>
+      <p><strong style="color:#fff">Objeto.</strong> CAOBA FITNESS SAS le prestará al AFILIADO los servicios inherentes a CrossFit, Nutrición, Bienestar y Salud en contraprestación al precio estipulado. Este derecho es PERSONAL E INTRANSFERIBLE.</p>
+      <p><strong style="color:#fff">Devolución del dinero.</strong> CAOBA FITNESS SAS no realiza devolución de dinero. En caso de incapacidad física que impida el entrenamiento (embarazo, lesiones permanentes, etc.), el AFILIADO podrá suspender o ceder el plan, con perjuicio del tiempo ya utilizado.</p>
+      <p><strong style="color:#fff">Obligaciones del afiliado.</strong> El AFILIADO se obliga a: (i) pagar el precio en las condiciones estipuladas; (ii) adelantar actividades físicas de manera prudente según sus capacidades individuales; (iii) responder por daños a instalaciones, equipos, demás afiliados o personal de CAOBA FITNESS SAS; (iv) comunicar variaciones en su estado de salud relacionadas con Diabetes, Enfermedad cardiovascular, Hipertensión Arterial, ACV, VIH, Cáncer, EPOC, malnutrición, o uso de corticoides e inmunosupresores.</p>
+      <p><strong style="color:#fff">Obligaciones de CAOBA FITNESS SAS.</strong> CAOBA FITNESS SAS se obliga a: (i) permitir el ingreso del AFILIADO a sus establecimientos; (ii) suministrar equipos y elementos técnicos; (iii) mantener operativos los establecimientos durante la vigencia del contrato; (iv) diseñar rutinas de entrenamiento y contar con personal idóneo en CrossFit, Nutrición, Bienestar y Salud.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-accept-btn" onclick="acceptTerms()">Acepto los términos y condiciones</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SLOTS POR CLASE ────────────────────────────────────────────────────────
+const SLOTS = {
+  CrossFit: {
+    'Lun': ['5:00 AM','6:00 AM','7:00 AM','12:30 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'],
+    'Mar': ['5:00 AM','6:00 AM','7:00 AM','12:30 PM','6:00 PM','7:00 PM','8:00 PM'],
+    'Mie': ['6:00 AM','7:00 AM','12:30 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'],
+    'Jue': ['5:00 AM','6:00 AM','7:00 AM','12:30 PM','5:00 PM','6:00 PM'],
+    'Vie': ['5:00 AM','6:00 AM','7:00 AM','6:00 PM'],
+    'Sáb': ['8:00 AM','9:00 AM'],
+  },
+  Hyrox: {
+    'Lun': ['7:00 AM'],
+    'Mar': ['5:00 PM'],
+    'Mie': ['5:00 AM'],
+    'Jue': ['7:00 PM'],
+    'Vie': ['12:30 PM'],
+    'Sáb': ['10:00 AM'],
+  }
+};
+
+// Mapeo de nombre corto → número de día JS (0=Dom, 1=Lun...)
+const DIA_NUM = { Lun:1, Mar:2, Mie:3, Jue:4, Vie:5, Sáb:6 };
+const DIA_FULL = { Lun:'Lunes', Mar:'Martes', Mie:'Miércoles', Jue:'Jueves', Vie:'Viernes', Sáb:'Sábado' };
+
+// Estado
+let claseSeleccionada  = null;
+let diaSeleccionado    = null;
+let slotSeleccionado   = null;
+let generoSeleccionado = null;
+
+// ── PRÓXIMAS FECHAS (max 5 días hábiles adelante) ────────────────────────────
+function getProximosDias(clase) {
+  // Días disponibles para esa clase
+  const diasDisponibles = Object.keys(SLOTS[clase]);
+  const hoy = new Date();
+  hoy.setHours(0,0,0,0);
+  const resultados = [];
+  let cursor = new Date(hoy);
+  cursor.setDate(cursor.getDate() + 1); // empezar desde mañana
+
+  while (resultados.length < 7 && (cursor - hoy) <= 14 * 24*60*60*1000) {
+    const jsDay = cursor.getDay(); // 0=Dom
+    const diaCorto = Object.keys(DIA_NUM).find(k => DIA_NUM[k] === jsDay);
+    if (diaCorto && diasDisponibles.includes(diaCorto)) {
+      const dd = String(cursor.getDate()).padStart(2,'0');
+      const mm = String(cursor.getMonth()+1).padStart(2,'0');
+      resultados.push({
+        valor: `${diaCorto} ${dd}/${mm}`,
+        label: `${DIA_FULL[diaCorto]} ${dd}/${mm}`,
+        diaCorto,
+      });
+      if (resultados.length === 5) break;
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return resultados;
+}
+
+// ── CLASE TOGGLE ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.clase-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    claseSeleccionada = btn.dataset.clase;
+    diaSeleccionado   = null;
+    slotSeleccionado  = null;
+
+    document.querySelectorAll('.clase-btn').forEach(b =>
+      b.classList.remove('active-cf','active-hy'));
+    btn.classList.add(claseSeleccionada === 'CrossFit' ? 'active-cf' : 'active-hy');
+
+    renderDias();
+    hide('err-clase');
+  });
+});
+
+function renderDias() {
+  const fieldDia = document.getElementById('field-dia');
+  const select   = document.getElementById('dia-select');
+  const grid     = document.getElementById('slots-grid');
+  const empty    = document.getElementById('slots-empty');
+
+  if (!claseSeleccionada) {
+    fieldDia.style.display = 'none';
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+    empty.textContent = 'Selecciona primero la clase de interés.';
+    return;
+  }
+
+  const dias = getProximosDias(claseSeleccionada);
+  select.innerHTML = '<option value="">Selecciona un día</option>' +
+    dias.map(d => `<option value="${d.diaCorto}">${d.label}</option>`).join('');
+
+  fieldDia.style.display = 'flex';
+  grid.style.display = 'none';
+  empty.style.display = 'none';
+}
+
+// ── DIA SELECT → filtrar horas ────────────────────────────────────────────────
+document.getElementById('dia-select').addEventListener('change', function() {
+  diaSeleccionado  = this.value;
+  slotSeleccionado = null;
+  const grid  = document.getElementById('slots-grid');
+  const empty = document.getElementById('slots-empty');
+
+  if (!diaSeleccionado || !claseSeleccionada) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+    empty.textContent = 'Selecciona un día para ver los horarios.';
+    return;
+  }
+
+  const horas = SLOTS[claseSeleccionada][diaSeleccionado] || [];
+  if (horas.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+    empty.textContent = 'No hay clases disponibles ese día.';
+    return;
+  }
+
+  grid.style.display = 'grid';
+  empty.style.display = 'none';
+  grid.innerHTML = horas.map(hora =>
+    `<button type="button" class="slot-btn" data-slot="${diaSeleccionado} ${hora}">
+      ${hora}
+    </button>`
+  ).join('');
+
+  grid.querySelectorAll('.slot-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      slotSeleccionado = btn.dataset.slot;
+      grid.querySelectorAll('.slot-btn').forEach(b =>
+        b.classList.remove('selected-cf','selected-hy'));
+      btn.classList.add(claseSeleccionada === 'CrossFit' ? 'selected-cf' : 'selected-hy');
+      hide('err-slot');
+    });
+  });
+  hide('err-slot');
+});
+
+// ── TÉRMINOS Y CONDICIONES ───────────────────────────────────────────────────
+let termsAccepted = false;
+
+document.getElementById('open-terms').addEventListener('click', () => {
+  document.getElementById('termsModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+
+function closeTerms() {
+  document.getElementById('termsModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function acceptTerms() {
+  termsAccepted = true;
+  const check = document.getElementById('terms-check');
+  check.classList.add('checked');
+  check.setAttribute('aria-checked', 'true');
+  document.getElementById('terms-wrap').classList.remove('error');
+  hide('err-terms');
+  closeTerms();
+}
+
+document.getElementById('terms-check').addEventListener('click', () => {
+  if (!termsAccepted) {
+    document.getElementById('termsModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } else {
+    termsAccepted = false;
+    const check = document.getElementById('terms-check');
+    check.classList.remove('checked');
+    check.setAttribute('aria-checked', 'false');
+  }
+});
+
+document.getElementById('terms-check').addEventListener('keydown', (e) => {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); document.getElementById('terms-check').click(); }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeTerms();
+});
+
+document.getElementById('termsModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('termsModal')) closeTerms();
+});
+
+// ── GÉNERO RADIO ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.radio-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    generoSeleccionado = opt.querySelector('input').value;
+    opt.querySelector('input').checked = true;
+    document.querySelectorAll('.radio-opt').forEach(o => o.classList.remove('checked'));
+    opt.classList.add('checked');
+    hide('err-genero');
+  });
+});
+
+// ── CELULAR — sin espacios ────────────────────────────────────────────────────
+document.getElementById('celular').addEventListener('input', function() {
+  this.value = this.value.replace(/\s/g, '');
+});
+
+// ── FECHA max = hoy ───────────────────────────────────────────────────────────
+document.getElementById('fecha_nac').max = new Date().toISOString().split('T')[0];
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function show(id) { document.getElementById(id).classList.add('show'); }
+function hide(id) { document.getElementById(id).classList.remove('show'); }
+function val(id)  { return document.getElementById(id).value.trim(); }
+function markErr(fieldId, errId) {
+  const el = document.getElementById(fieldId);
+  if (el) el.classList.add('error');
+  show(errId);
+}
+function clearErr(fieldId, errId) {
+  const el = document.getElementById(fieldId);
+  if (el) el.classList.remove('error');
+  hide(errId);
+}
+
+// ── VALIDACIÓN ────────────────────────────────────────────────────────────────
+function validate() {
+  let ok = true;
+  const checks = [
+    ['nombre',        'err-nombre',        v => v.length > 0],
+    ['apellido',      'err-apellido',      v => v.length > 0],
+    ['tipo_doc',      'err-tipo_doc',      v => v.length > 0],
+    ['num_doc',       'err-num_doc',       v => v.length > 0],
+    ['fecha_nac',     'err-fecha_nac',     v => v.length > 0],
+    ['email',         'err-email',         v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)],
+    ['celular',       'err-celular',       v => /^[0-9]{7,15}$/.test(v)],
+    ['como_llegaste', 'err-como_llegaste', v => v.length > 0],
+  ];
+  checks.forEach(([fid, eid, fn]) => {
+    if (!fn(val(fid))) { markErr(fid, eid); ok = false; }
+    else clearErr(fid, eid);
+  });
+  if (!generoSeleccionado) { show('err-genero'); ok = false; } else hide('err-genero');
+  if (!claseSeleccionada)  { show('err-clase');  ok = false; } else hide('err-clase');
+  if (!slotSeleccionado)   { show('err-slot');   ok = false; } else hide('err-slot');
+  if (!termsAccepted) {
+    document.getElementById('terms-wrap').classList.add('error');
+    show('err-terms'); ok = false;
+  } else {
+    document.getElementById('terms-wrap').classList.remove('error');
+    hide('err-terms');
+  }
+  return ok;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+document.getElementById('registroForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  const payload = {
+    nombre:        val('nombre'),
+    apellido:      val('apellido'),
+    tipo_doc:      val('tipo_doc'),
+    num_doc:       val('num_doc'),
+    genero:        generoSeleccionado,
+    fecha_nac:     val('fecha_nac'),
+    email:         val('email'),
+    celular:       val('indicativo') + val('celular'),
+    como_llegaste: val('como_llegaste'),
+    clase:         claseSeleccionada,
+    slot:          slotSeleccionado,
+    timestamp:     new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }),
+    terminos:      'Aceptado',
+  };
+
+  try {
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxve2ZDrzfhupVm8O5HNyLUz9UAQ2EZyp0dlup5YE6XotHiJofslW3G89JX75jhCfyN/exec';
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    document.getElementById('registroForm').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+  } catch (err) {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    alert('Hubo un error al enviar. Por favor escríbenos directamente por WhatsApp.');
+  }
+});
+</script>
