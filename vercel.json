@@ -9,6 +9,11 @@
       "source": "/calificacion107",
       "destination": "https://script.google.com/macros/s/AKfycbwSuk5QHEuCXmSB-HXnygEVqE3JpMrxFmWZTcssP3aaX6-klg-uYVjOCZufq7ILs-Vh/exec?sede=107",
       "statusCode": 302
+    },
+    {
+      "source": "/precios",
+      "destination": "/#planes",
+      "statusCode": 302
     }
   ]
 }
