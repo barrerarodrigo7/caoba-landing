@@ -417,6 +417,22 @@
     }
     .success-wa:hover { background: #1ebe5a; }
 
+    .form-fallo {
+      display: none;
+      border: 1px solid var(--red);
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-fallo.show { display: block; }
+    .form-fallo-t {
+      font-family: var(--font-display);
+      font-weight: 900; font-size: 20px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 8px;
+    }
+    .form-fallo-p { color: var(--grey-light); margin-bottom: 18px; }
+
     /* Spinner */
     .spinner {
       display: none;
@@ -751,6 +767,12 @@
       </div>
       <span class="field-error" id="err-terms">Debes aceptar los términos y condiciones para continuar</span>
 
+      <div class="form-fallo" id="fallo" role="alert">
+        <p class="form-fallo-t">No pudimos confirmar tu registro.</p>
+        <p class="form-fallo-p">Escríbenos por WhatsApp y lo completamos contigo.</p>
+        <a class="success-wa" id="wa_fallo" href="#" target="_blank" rel="noopener">Escribirnos por WhatsApp</a>
+      </div>
+
       <button type="submit" class="btn-submit" id="btnSubmit">
         <span class="btn-text">Reservar mi clase gratuita</span>
         <span class="spinner"></span>
@@ -1070,11 +1092,17 @@ function validate() {
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
+const TOPE_MS = 30000;
+let enviando = false;
+
 document.getElementById('registroForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (enviando) return;
   if (!validate()) return;
 
+  enviando = true;
   const btn = document.getElementById('btnSubmit');
+  document.getElementById('fallo').classList.remove('show');
   btn.disabled = true;
   btn.classList.add('loading');
 
@@ -1094,20 +1122,45 @@ document.getElementById('registroForm').addEventListener('submit', async (e) => 
     terminos:      'Aceptado',
   };
 
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxve2ZDrzfhupVm8O5HNyLUz9UAQ2EZyp0dlup5YE6XotHiJofslW3G89JX75jhCfyN/exec';
+  let guardado = false;
+  const corte = new AbortController();
+  const reloj = setTimeout(() => corte.abort(), TOPE_MS);
   try {
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxve2ZDrzfhupVm8O5HNyLUz9UAQ2EZyp0dlup5YE6XotHiJofslW3G89JX75jhCfyN/exec';
-    await fetch(SCRIPT_URL, {
+    const r = await fetch(SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload),
+      signal: corte.signal,
     });
+    if (r.ok) {
+      const j = await r.json();
+      guardado = j.result === 'ok';
+    }
+  } catch (err) {
+  } finally {
+    clearTimeout(reloj);
+  }
+
+  if (guardado) {
     document.getElementById('registroForm').style.display = 'none';
     document.getElementById('successScreen').classList.add('show');
-  } catch (err) {
-    btn.disabled = false;
-    btn.classList.remove('loading');
-    alert('Hubo un error al enviar. Por favor escríbenos directamente por WhatsApp.');
+    return;
   }
+
+  const msgFallo = encodeURIComponent(
+    'Hola Caoba, soy ' + payload.nombre + ' ' + payload.apellido +
+    '. Intenté registrarme para mi clase de cortesía (' + claseSeleccionada +
+    ', ' + slotSeleccionado + '), pero la página NO pudo confirmar mi registro. ' +
+    '¿Me ayudan a completarlo?'
+  );
+  document.getElementById('wa_fallo').href =
+    'https://wa.me/573052985336?text=' + msgFallo;
+  document.getElementById('fallo').classList.add('show');
+  btn.disabled = false;
+  btn.classList.remove('loading');
+  btn.querySelector('.btn-text').textContent = 'Reintentar';
+  document.getElementById('fallo').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  enviando = false;
 });
 </script>
